@@ -1,15 +1,8 @@
-.SECONDARY:
+all: mlp_sketch.png
 
-all: mlp_sketch.pdf
-
-plot_%.tex: plot_%.gnu 
-	gnuplot $< 
-	epstopdf epslatex-inc.eps
-	mv epslatex.out $@
+%.png: %.pdf
+	convert -density 150 $< $@
 
 %.pdf: %.tex
 	pdflatex $< 
-	pdfcrop $@ $@
 
-clean: 
-	rm -f *.o $(SIMULATIONS)
