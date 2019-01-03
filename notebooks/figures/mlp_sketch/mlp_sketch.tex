@@ -1,0 +1,94 @@
+\documentclass{standalone}
+
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{tikz,graphicx}
+\usepackage{sfmath}
+\usepackage{xifthen}
+\usetikzlibrary{positioning,arrows,calc}
+% \usetikzlibrary{spy}
+\renewcommand\familydefault\sfdefault
+
+\usepackage{xcolor}
+
+\definecolor{gnu-violet}{HTML}{9400D3}%
+\definecolor{gnu-green}{HTML}{009E73}%
+\definecolor{gnu-blue}{HTML}{56b4e9}%
+\definecolor{gnu-yellow}{HTML}{E69F00}%
+
+
+\begin{document}
+
+\pagestyle{empty}
+
+\def\layersep{1.2cm}
+\def\unitsep{0.6cm}
+\def\nbhidden{1}
+
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50]
+
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{input neuron}=[circle, fill=black!25, minimum size=15pt, inner sep=0pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=12pt,inner sep=0pt]
+    \tikzstyle{annot} = [text width=2cm, text centered, node distance=2.2cm]
+
+
+	% Input units
+	\foreach \name / \y in {0,...,5} {
+		\node[neuron] (I-\name) at (\y*\unitsep, 0) {};
+	}
+
+    % Draw the hidden layer nodes 
+	\foreach \layer in {1,...,\nbhidden} {
+		\foreach \name / \y in {1,...,4} {
+			\node[neuron] (H\layer-\name) at (\y*\unitsep, \layer*\layersep) {};
+		}
+	}
+
+    % Draw the output layer nodes
+	\foreach \name / \y in {2,...,3} {
+		\node[neuron] (O-\name) at (\y*\unitsep, \nbhidden*\layersep + \layersep) {};
+	}
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+    \foreach \source in {0,...,5}
+		\foreach \dest in {1,...,4} {
+			\path (I-\source) edge [->] (H1-\dest);
+		}
+
+    % Connect input to hidden
+    \foreach \source in {1,...,4}
+		\foreach \dest in {2,...,3} {
+			\path (H\nbhidden-\source) edge [->] (O-\dest);
+		}
+
+    % Connect hidden layers
+	% \foreach \layer in {1,...,\nbhidden} {
+    % \foreach \source in {1,...,4}
+	% 	\foreach \dest in {1,...,4} {
+	% 		\path (H\layer-\source) edge [->] (H\nbhidden-\dest);
+	% 	}
+	% }
+
+    % Connect every node in the hidden layer with the output layer
+    \foreach \source in {1,...,4}
+		\foreach \dest in {2,...,3} {
+			\path (H\nbhidden-\source) edge [->] (O-\dest);
+		}
+
+
+    % Annotate the layers
+	\node[annot,left of=I-0] {Input layer};
+	\node[annot,left of=O-2] {Output layer};
+
+
+\end{tikzpicture}
+
+% End of code
+
+\end{document}
+
+
+
