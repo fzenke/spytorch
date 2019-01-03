@@ -30,7 +30,7 @@ corners, minimum height=2.2em]
 
 	% Place nodes 
 	\foreach \t in {0,...,\n} {
-		\node [sum] (x\t) at (\sep*\t,0) {$x^{(0)}(\t)$};
+		\node [sum] (x\t) at (\sep*\t,0) {$S^{(0)}(\t)$};
 		\node [syn, above of=x\t] (I\t) {$I^{(1)}(\t)$};
 		\node [mem, above of=I\t] (U\t) {$U^{(1)}(\t)$};
 		\node [spk, above of=U\t] (S\t) {$S^{(1)}(\t)$};
@@ -42,11 +42,11 @@ corners, minimum height=2.2em]
 
     % Draw edges
 	\foreach \t in {0,...,\n} {
-    	\path [->, draw, thick] (x\t) -- (I\t) node[near start, right] {$W^{(0,1)}$};
+    	\path [->, draw, thick] (x\t) -- (I\t) node[near start, right] {$W^{(1)}$};
     	\path [->, draw, thick] (I\t) -- (U\t);
     	\path [->, draw, thick] (U\t) -- (S\t);
     	\path [->, draw, thick] (y\t) -- (downstream\t) node[near start, right]
-		{$W^{(1,2)}$};
+		{$W^{(2)}$};
 		% \path [->, draw, thick, spikecolor] (upstream\t) -- (x\t) node[near end,
 		% right] {$W^{(0,1)}$};
 	}
@@ -59,7 +59,7 @@ corners, minimum height=2.2em]
 
 		\path [->, draw, thick, spikecolor] (S\t) -- (y\next) node[near start] {$\mathds{1}$};
 		\path [->, draw, thick, spikecolor] (S\t) -- (U\next) node[near start] {$-\mathds{1}$};
-		\path [->, draw, thick, spikecolor] (S\t) -- (I\next) node[near end, left] {$W^{(1,1)}$};
+		% \path [->, draw, thick, spikecolor] (S\t) -- (I\next) node[near end, left] {$W^{(1,1)}$};
 
 	}
 
