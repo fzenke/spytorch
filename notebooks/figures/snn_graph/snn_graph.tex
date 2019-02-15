@@ -7,46 +7,48 @@
 \usepackage{bbold}
 \usepackage{dsfont}
 \usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning,quotes}
+
+\renewcommand{\familydefault}{\sfdefault}
+
 \begin{document}
 \pagestyle{empty}
 
-% \renewcommand{\familydefault}{\sfdefault}
-
-\definecolor{spikecolor}{RGB}{180,89,23}
+\definecolor{spikecolor}{RGB}{180,51,76}
+\definecolor{pyblue}{HTML}{1f77b4}
+\definecolor{pyorange}{HTML}{ff7f0e}
 
 
 % Define block styles
 \tikzstyle{block} = [rectangle, draw, text width=3em, text centered, rounded
 corners, minimum height=2.2em]
-\tikzstyle{sum} = [block ]
-\tikzstyle{syn} = [block, fill=black!20 ]
-\tikzstyle{mem} = [block, fill=blue!30 ]
-\tikzstyle{spk} = [block, fill=spikecolor!20 ]
-    
-\begin{tikzpicture}[node distance = 1.5cm, auto, font=\sffamily]
+\tikzstyle{sum} = [block]
+\tikzstyle{syn} = [block, fill=black!10 ]
+\tikzstyle{mem} = [block, fill=pyblue!40 ]
+\tikzstyle{spk} = [block, fill=pyorange!40 ]
+   
+
+\begin{tikzpicture}[node distance = 1.2cm, auto]
     \pgfmathsetmacro{\n}{4}  % sets number of units -1
     \pgfmathsetmacro{\nm}{3}  % set to \n -1
-    \pgfmathsetmacro{\sep}{2.4}  
+    \pgfmathsetmacro{\sep}{2.6}  
 
 	% Place nodes 
 	\foreach \t in {0,...,\n} {
-		\node [sum] (x\t) at (\sep*\t,0) {$S^{(0)}(\t)$};
-		\node [syn, above of=x\t] (I\t) {$I^{(1)}(\t)$};
-		\node [mem, above of=I\t] (U\t) {$U^{(1)}(\t)$};
-		\node [spk, above of=U\t] (S\t) {$S^{(1)}(\t)$};
-		\node [sum, above of=S\t] (y\t) {$x^{(2)}(\t)$};
+		\node [sum] (x\t) at (\sep*\t,0) {$S^{(0)}[\t]$};
+		\node [syn, above of=x\t] (I\t) {$I^{(1)}[\t]$};
+		\node [mem, above of=I\t] (U\t) {$U^{(1)}[\t]$};
+		\node [spk, above of=U\t] (S\t) {$S^{(1)}[\t]$};
+		\node [block, above of=S\t] (y\t) {};
 		\node [above of=y\t] (downstream\t) {};
 	}
-	\node [below of=x\n, node distance=0.66cm] {\footnotesize fzenke.net};
 
 
     % Draw edges
 	\foreach \t in {0,...,\n} {
-    	\path [->, draw, thick] (x\t) -- (I\t) node[near start, right] {$W^{(1)}$};
-    	\path [->, draw, thick] (I\t) -- (U\t);
     	\path [->, draw, thick] (U\t) -- (S\t);
-    	\path [->, draw, thick] (y\t) -- (downstream\t) node[near start, right]
-		{$W^{(2)}$};
+    	% \path [->, draw, thick] (y\t) -- (downstream\t) node[near start, right]
+		% {$W^{(1,2)}$};
 		% \path [->, draw, thick, spikecolor] (upstream\t) -- (x\t) node[near end,
 		% right] {$W^{(0,1)}$};
 	}
@@ -54,14 +56,26 @@ corners, minimum height=2.2em]
 	% Forward in time
 	\foreach \t in {0,...,\nm} {
 		\pgfmathtruncatemacro{\next}{\t + 1}
+		\path [->, draw, thick] (x\t) -- (I\next) node[near start, right]
+		{~$W^{(1)}$};
+    	\path [->, draw, thick] (I\t) -- (U\next);
+
     	\path [->, draw, thick] (I\t) -- (I\next) node[near end] {$\alpha$};
 		\path [->, draw, thick] (U\t) -- (U\next) node[near end] {$\beta$};
 
-		\path [->, draw, thick, spikecolor] (S\t) -- (y\next) node[near start] {$\mathds{1}$};
-		\path [->, draw, thick, spikecolor] (S\t) -- (U\next) node[near start] {$-\mathds{1}$};
-		% \path [->, draw, thick, spikecolor] (S\t) -- (I\next) node[near end, left] {$W^{(1,1)}$};
+		\path [->, draw, thick, pyorange] (S\t) -- (y\next) node[near end,
+		left] {$W^{(2)}$};
+		\path [->, draw, thick, pyorange, dashed] (S\t) -- (U\next) node[near start] {$-\mathds{1}$};
+		\path [->, draw, thick, pyorange] (S\t) -- (I\next) node[near end,
+		left] {$V^{(1)}$};
 
 	}
+
+	\node[node distance=1.0cm, below of=x0] (a0) {};
+	\node[right of=a0] (a1) {};
+	% \path [->, draw, thick, black] (a0) -- (a1) node[near start, below] {Time};
+
+	\draw  (a0)  edge[->,"Time"]  (a1) ;
 
 \end{tikzpicture}
 
