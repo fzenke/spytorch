@@ -1,4 +1,5 @@
-# SpyTorch 
+# SpyTorch
+A tutorial on surrogate gradient learning in spiking neural networks
 
 Version: 0.1 -- Feedback and contributions are welcome.
 
