@@ -1,7 +1,7 @@
 # SpyTorch
 A tutorial on surrogate gradient learning in spiking neural networks
 
-Version: 0.1 -- Feedback and contributions are welcome.
+Version: 0.2 -- Feedback and contributions are welcome.
 
 This repository contains tutorial files to get you started with the basic ideas
 of surrogate gradient learning in spiking neural networks using PyTorch. 
