@@ -1,7 +1,9 @@
 # SpyTorch
 A tutorial on surrogate gradient learning in spiking neural networks
 
-Version: 0.3
+Version: 0.3 
+
+[![DOI](https://zenodo.org/badge/170391179.svg)](https://zenodo.org/badge/latestdoi/170391179)
 
 This repository contains tutorial files to get you started with the basic ideas
 of surrogate gradient learning in spiking neural networks using PyTorch. 
@@ -13,9 +15,8 @@ Feedback and contributions are welcome.
 > https://ieeexplore.ieee.org/document/8891809
 > preprint: https://arxiv.org/abs/1901.09948
 
+
 Also see https://github.com/surrogate-gradient-learning
-
-
 
 ## Copyright and license
 
