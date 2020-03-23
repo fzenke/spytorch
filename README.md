@@ -10,7 +10,7 @@ of surrogate gradient learning in spiking neural networks using PyTorch.
 
 Feedback and contributions are welcome.
 
-> For more information on surrogate gradient learning please refer to:
+For more information on surrogate gradient learning please refer to:
 > Neftci, E.O., Mostafa, H., and Zenke, F. (2019). Surrogate Gradient Learning in Spiking Neural Networks: Bringing the Power of Gradient-based optimization to spiking neural networks. IEEE Signal Processing Magazine 36, 51–63.
 > https://ieeexplore.ieee.org/document/8891809
 > preprint: https://arxiv.org/abs/1901.09948
