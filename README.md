@@ -1,7 +1,7 @@
 # SpyTorch
 A tutorial on surrogate gradient learning in spiking neural networks
 
-Version: 0.3 
+Version: 0.4
 
 [![DOI](https://zenodo.org/badge/170391179.svg)](https://zenodo.org/badge/latestdoi/170391179)
 
