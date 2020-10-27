@@ -7,6 +7,10 @@ from six.moves.urllib.error import HTTPError
 from six.moves.urllib.error import URLError
 from six.moves.urllib.request import urlretrieve
 
+# The functions used in this file to download the dataset are based on 
+# code from the keras library. Specifically, from the following file:
+# https://github.com/tensorflow/tensorflow/blob/v2.3.1/tensorflow/python/keras/utils/data_utils.py
+
 
 def get_shd_dataset(cache_dir, cache_subdir):
 
