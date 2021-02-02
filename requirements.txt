@@ -1,0 +1,8 @@
+jupyter==1.0.0
+jupyter-client==6.1.6
+jupyter-console==6.1.0
+jupyter-core==4.6.3
+torch==1.6.0
+torchvision==0.7.0
+seaborn==0.10.1
+h5py==2.10.0
