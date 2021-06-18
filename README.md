@@ -8,6 +8,8 @@ Version: 0.4
 This repository contains tutorial files to get you started with the basic ideas
 of surrogate gradient learning in spiking neural networks using PyTorch. 
 
+You find a brief introductory video accompanying these notebooks here https://youtu.be/xPYiAjceAqU
+
 Feedback and contributions are welcome.
 
 For more information on surrogate gradient learning please refer to:
