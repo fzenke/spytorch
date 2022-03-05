@@ -15,13 +15,14 @@ from six.moves.urllib.request import urlretrieve
 def get_shd_dataset(cache_dir, cache_subdir):
 
     # The remote directory with the data files
-    base_url = "https://compneuro.net/datasets"
+    base_url = "https://zenkelab.org/datasets"
 
     # Retrieve MD5 hashes from remote
     response = urllib.request.urlopen("%s/md5sums.txt"%base_url)
     data = response.read() 
     lines = data.decode('utf-8').split("\n")
     file_hashes = { line.split()[1]:line.split()[0] for line in lines if len(line.split())==2 }
+
     # Download the Spiking Heidelberg Digits (SHD) dataset
     files = [ "shd_train.h5.gz", 
               "shd_test.h5.gz",
@@ -29,12 +30,12 @@ def get_shd_dataset(cache_dir, cache_subdir):
     for fn in files:
         origin = "%s/%s"%(base_url,fn)
         hdf5_file_path = get_and_gunzip(origin, fn, md5hash=file_hashes[fn], cache_dir=cache_dir, cache_subdir=cache_subdir)
-        print("File %s decompressed to:"%(fn))
-        print(hdf5_file_path)
+        # print("File %s decompressed to:"%(fn))
+        print("Available at: %s"%hdf5_file_path)
 
 def get_and_gunzip(origin, filename, md5hash=None, cache_dir=None, cache_subdir=None):
     gz_file_path = get_file(filename, origin, md5_hash=md5hash, cache_dir=cache_dir, cache_subdir=cache_subdir)
-    hdf5_file_path = gz_file_path
+    hdf5_file_path = gz_file_path[:-3]
     if not os.path.isfile(hdf5_file_path) or os.path.getctime(gz_file_path) > os.path.getctime(hdf5_file_path):
         print("Decompressing %s"%gz_file_path)
         with gzip.open(gz_file_path, 'r') as f_in, open(hdf5_file_path, 'wb') as f_out:
@@ -82,6 +83,9 @@ def get_file(fname,
     if not os.access(datadir_base, os.W_OK):
         datadir_base = os.path.join('/tmp', '.data-cache')
     datadir = os.path.join(datadir_base, cache_subdir)
+
+    # Create directories if they don't exist
+    os.makedirs(cache_dir, exist_ok=True)
     os.makedirs(datadir, exist_ok=True)
 
     fpath = os.path.join(datadir, fname)
@@ -102,16 +106,16 @@ def get_file(fname,
     if download:
         print('Downloading data from', origin)
 
-    error_msg = 'URL fetch failure on {}: {} -- {}'
-    try:
+        error_msg = 'URL fetch failure on {}: {} -- {}'
         try:
-            urlretrieve(origin, fpath)
-        except HTTPError as e:
-            raise Exception(error_msg.format(origin, e.code, e.msg))
-        except URLError as e:
-            raise Exception(error_msg.format(origin, e.errno, e.reason))
-    except (Exception, KeyboardInterrupt) as e:
-        if os.path.exists(fpath):
-            os.remove(fpath)
+            try:
+                urlretrieve(origin, fpath)
+            except HTTPError as e:
+                raise Exception(error_msg.format(origin, e.code, e.msg))
+            except URLError as e:
+                raise Exception(error_msg.format(origin, e.errno, e.reason))
+        except (Exception, KeyboardInterrupt) as e:
+            if os.path.exists(fpath):
+                os.remove(fpath)
 
     return fpath
