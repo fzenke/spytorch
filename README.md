@@ -22,7 +22,7 @@ Also see https://github.com/surrogate-gradient-learning
 
 ## Copyright and license
 
-Copyright 2019-2020 Friedemann Zenke, https://fzenke.net
+Copyright 2019-2022 Friedemann Zenke, https://fzenke.net
 
 This work is licensed under a Creative Commons Attribution 4.0 International License.
 http://creativecommons.org/licenses/by/4.0/
